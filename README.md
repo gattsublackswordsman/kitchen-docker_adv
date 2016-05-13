@@ -1,6 +1,6 @@
 # <a name="title"></a> Kitchen::DockerAdv
 
-A Test Kitchen Driver for DockerAdv.
+A Test Kitchen Driver for Docker.
 
 ## <a name="requirements"></a> Requirements
 
