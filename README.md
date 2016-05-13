@@ -49,15 +49,15 @@ example:
 
 ## <a name="authors"></a> Authors
 
-Created by [Sean Porter][author] (<portertech@gmail.com>)
+Created by [Sean Porter][original-author]
 
-maintained by [Gattsu] (<gattsu.blackswordsman@gmail.com>)
+Maintained by [Gattsu][author]
 
 ## <a name="license"></a> License
 
 Apache 2.0 (see [LICENSE][license])
 
-
+[original-author]:           https://github.com/Sean-Porter
 [author]:           https://github.com/gattsublackswordsman
 [issues]:           https://github.com/gattsublackswordsman/kitchen-docker_adv/issues
 [license]:          https://github.com/gattsublackswordsman/kitchen-docker_adv/blob/master/LICENSE
