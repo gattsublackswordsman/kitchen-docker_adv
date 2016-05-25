@@ -32,9 +32,7 @@ module Kitchen
       default_config :socket,        'unix:///var/run/docker.sock'
       default_config :privileged,    true
       default_config :capadd,        true
-      default_config :module,        '1'
-      default_config :branch,        'trunk'
-      default_config :regression,    'V0.0.0'
+      default_config :applications,  []
       default_config :environment,   'integration'
       default_config :use_cache,     true
       default_config :remove_images, false
@@ -69,6 +67,18 @@ module Kitchen
         rescue
           raise UserError,
           'You must first install the Docker CLI tool http://www.docker.io/gettingstarted/'
+      end
+
+      def build_applications_list()
+        applications=config[:applications]
+        apps = Array.new
+        applications.each do | application |
+          code   = application[:code]
+          branch = application[:branch]
+          apps << "#{code}=#{branch}"
+        end
+
+        return "#{apps.join(':')}"
       end
 
       def default_image
@@ -188,9 +198,7 @@ module Kitchen
       def build_image(state)
         cmd = "build"
         cmd << " --no-cache" unless config[:use_cache]
-        cmd << " --build-arg module=#{config[:module]}" if config[:module]
-        cmd << " --build-arg branch=#{config[:branch]}" if config[:branch]
-        cmd << " --build-arg regression=#{config[:regression]}" if config[:regression]
+        cmd << " --build-arg applications=#{build_applications_list()}"
         cmd << " --build-arg environment=#{config[:environment]}" if config[:environment]
         cmd << " --build-arg svn_base=#{config[:svn_base]}" if config[:svn_base]
         cmd << " --build-arg svn_user=#{config[:svn_user]}" if config[:svn_user]
@@ -224,9 +232,6 @@ module Kitchen
         cmd << " -e http_proxy='#{config[:http_proxy]}'" if config[:http_proxy]
         cmd << " -p 3000:3000" if config[:rails]
         cmd << " -e https_proxy='#{config[:https_proxy]}'" if config[:https_proxy]
-        cmd << " -e module=#{config[:module]}" 
-        cmd << " -e branch=#{config[:branch]}"
-        cmd << " -e regression=#{config[:regression]}"
         cmd << " -e environment=#{config[:environment]}" 
         cmd << " -e svn_base=#{config[:svn_base]}"
         cmd << " -e svn_user=#{config[:svn_user]}"
